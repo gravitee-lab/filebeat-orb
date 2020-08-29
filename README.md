@@ -2,18 +2,56 @@
 
 Utilize this orb to easily add Logz.io to your CI/CD pipeline. This orb collects data from a job and sends its logs to Logz.io
 
+
 ## Usage
 
-Example use-cases are provided on the orb [registry page](https://circleci.com/orbs/registry/orb/logzio/logzio-orb#usage-examples). Source for these examples can be found within the `src/examples` directory.
+TODO
 
+## Design
+
+Started from https://github.com/gravitee-lab/GraviteeReleaseOrchestrator/issues/8
+
+* `Elasticsearch`, `Logstash`, and `Filebeat` to collect, and index logs into `Elasticsearch`.
+* A `Kibana` dashboard for logs
+* It's like the standard stack for log management with Elastic Stack
+
+Architecture (below there, everywhere there is a filebeat, this is a Circle CI pipeline Execution) :
+
+![Logging Filebeat architcture](./documentation/images/beats-logstash.jpg)
+
+Note : Grafana `loki` cannot fit in, beacause loki will try and hit "Inside the CircleCI pipeline", not possible.
 
 ## Resources
 
-[CircleCI Orb Registry Page](https://circleci.com/orbs/registry/orb/logzio/logzio-orb) - The official registry page of this orb for all versions, executors, commands, and jobs described.  
-[CircleCI Orb Docs](https://circleci.com/docs/2.0/orb-intro/#section=configuration) - Docs for using and creating CircleCI Orbs.  
+
+The reference offical Elastic Stack full tutorial, with links to free hosted `Elasticsearch`, regarding fully hosted solution proposal :
+* https://www.elastic.co/guide/en/beats/filebeat/7.8/filebeat-getting-started.html
+
+Main steps :
+
+
+* Step 1: Install `Filebeat` : this will be dockeried, run into circle ci pipeline
+* Step 2: Configure `Filebeat` : this will into circle ci pipeline
+* Step 3: Load the index template in Elasticsearch : that's gonna be outside `Circle CI` pipelines, within the `Elasticsearch` / `Logstash` (groks there) / `Kibana` stack, whether hosted or on prem
+* Step 4: Set up the `Kibana` dashboards: that's gonna be outside `Circle CI` pipelines, within the `Elasticsearch` / `Logstash` (groks there) / `Kibana` stack, whether hosted or on prem
+* Step 5: Start `Filebeat` : this will into circle ci pipeline
+* Step 6: View the sample `Kibana` dashboards : that's gonna be outside `Circle CI` pipelines, within the `Elasticsearch` / `Logstash` (groks there) / `Kibana` stack, whether hosted or on prem
+* more : => Quick start: modules for common log formats
+
+There is no logstacsh tehre, consider what it would take to ad it, and what are the main market `Logstash` SAAS Offers
+
+
+
+A few curiosities :
+* https://logz.io/blog/Filebeat-tutorial/ : quick config for several logstash instances
+* https://www.javainuse.com/elasticsearch/Filebeat-elk
+* https://medium.com/@jaiprksh57/how-to-monitor-your-service-and-infrstructure-using-elk-with-grafana-ddc427aad7cc
 
 ## How to contribute
 
+TODO
+
+<!--
 We welcome [issues](https://github.com/logzio/logzio-orb/issues) to and [pull requests](https://github.com/logzio/logzio-orb/pulls) against this repository!
 
 To publish a new production version:
@@ -22,7 +60,11 @@ To publish a new production version:
 * On merge, the release will be published to the orb registry automatically.
 
 For further questions/comments about this or other orbs, visit the Orb Category of [CircleCI Discuss](https://discuss.circleci.com/c/orbs).
+-->
 
 ## Change log
+
+<!--
 * 1.0.1 - add tests
 * 1.0.0 - First version
+-->
